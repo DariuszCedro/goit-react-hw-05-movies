@@ -15,7 +15,7 @@ export const Reviews = ({ apiKey }) => {
 
   useEffect(() => {
     async function fetchReviews() {
-      const reviews = await fetch(
+      await fetch(
         `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US`,
         options
       )
@@ -24,7 +24,7 @@ export const Reviews = ({ apiKey }) => {
         .catch(error => console.log(error));
     }
     fetchReviews();
-  }, []);
+  });
   console.log(movieReviews);
   return (
     <div>

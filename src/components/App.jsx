@@ -4,10 +4,11 @@ import { Route, Routes, Link } from 'react-router-dom';
 import { Home } from './pages/Home/Home';
 import { NotFound } from './pages/NotFound/NotFound';
 import { Movies } from './pages/Movies/Movies';
+import { MovieList } from './pages/MovieList/MovieList';
 import { MovieDetails } from './pages/MovieDetails/MovieDetails';
 import { Cast } from './pages/Cast/Cast';
 import { Reviews } from './pages/Reviews/Reviews';
-import css from './App.module.css';
+import './App.module.css';
 // const Home = React.lazy(() => import('./pages/Home/Home'));
 // const Movies = React.lazy(() => import('./pages/Movies/Movies'));
 // const MovieDetails = React.lazy(() =>
@@ -40,6 +41,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Home apiKey={apiKey} />} />
         <Route path="/movies" element={<Movies apiKey={apiKey} />} />
+        <Route path="/movies/list" element={<MovieList apiKey={apiKey} />} />
         <Route
           path="/movies/:movieId"
           element={<MovieDetails apiKey={apiKey} />}

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { MovieList } from '../MovieList/MovieList';
+import { useEffect } from 'react';
+
 export const Movies = ({ apiKey }) => {
   const [movies, setMovies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const title = searchParams.get('title') ?? '';
+  const location = useLocation();
 
   const options = {
     method: 'GET',
@@ -12,18 +17,29 @@ export const Movies = ({ apiKey }) => {
     },
   };
 
-  const handleClick = () => {
-    async function fetchMovies() {
-      const fetchedMovies = await fetch(
-        `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1`,
-        options
-      )
-        .then(response => response.json())
-        .then(response => setMovies(response.results))
-        .catch(error => console.log(error));
-      console.log(movies);
-    }
+  async function fetchMovies() {
+    await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${title}&include_adult=false&language=en-US&page=1`,
+      options
+    )
+      .then(response => response.json())
+      .then(response => setMovies(response.results))
+      .catch(error => console.log(error));
+  }
+
+  useEffect(() => {
     fetchMovies();
+  }, []);
+
+  const handleClick = e => {
+    e.preventDefault();
+
+    fetchMovies();
+  };
+
+  const updateQueryString = title => {
+    const nextParams = title !== '' ? { title } : {};
+    setSearchParams(nextParams);
   };
 
   return (
@@ -31,21 +47,15 @@ export const Movies = ({ apiKey }) => {
       <input
         type="text"
         placeholder="Search movie title..."
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
+        value={title}
+        onChange={e => updateQueryString(e.target.value)}
         className="search-input"
       />
-      <button onClick={handleClick} className="search-button">
+      <button type="submit" onClick={handleClick} className="search-button">
         Search
       </button>
 
-      <ul>
-        {movies.map(movie => (
-          <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>{movie.title || movie.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <MovieList movies={movies} title={title} />
     </div>
   );
 };

@@ -14,7 +14,7 @@ export const Trending = ({ apiKey }) => {
 
   useEffect(() => {
     async function fetchTrend() {
-      const trend = await fetch(
+      await fetch(
         'https://api.themoviedb.org/3/trending/all/day?language=en-US',
         options
       )
@@ -23,7 +23,7 @@ export const Trending = ({ apiKey }) => {
         .catch(error => console.log(error));
     }
     fetchTrend();
-  }, [trendingMovies]);
+  });
 
   return (
     <div>

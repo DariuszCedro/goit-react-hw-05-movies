@@ -15,7 +15,7 @@ export const Cast = ({ apiKey }) => {
 
   useEffect(() => {
     async function fetchCredits() {
-      const credits = await fetch(
+      await fetch(
         `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`,
         options
       )
@@ -24,7 +24,7 @@ export const Cast = ({ apiKey }) => {
         .catch(error => console.log(error));
     }
     fetchCredits();
-  }, []);
+  });
 
   return (
     <div>
@@ -33,7 +33,7 @@ export const Cast = ({ apiKey }) => {
         <li key={actor.id}>
           <img
             src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-            alt={'NO IMAGE'}
+            alt=""
           ></img>
           <h4>{actor.name}</h4>
           <p>{actor.character}</p>
