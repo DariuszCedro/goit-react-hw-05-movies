@@ -1,42 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet, useParams, useNavigate } from 'react-router-dom';
 
-export const Trending = () => {
-  const [trendingMovies, setTrendingMovies] = useState([]);
+export const MovieDetails = ({ apiKey }) => {
+  const [movieDetails, setMovieDetails] = useState([]);
+  const { movieId, prevPath } = useParams();
+  const navigate = useNavigate();
 
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYjZjNWEzMDUzOWIyNWQ2NGMyZjMwZWU3NTcxNDBhYSIsInN1YiI6IjY1MTU1OWE3ZWE4NGM3MDBjYTA2MzBmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FwLcqT6vmI1pVtpiCh05oXJVCAZQxvIbvFTx0sGIUxw',
+      Authorization: `Bearer ${apiKey}`,
     },
   };
 
   useEffect(() => {
-    async function fetchTrend() {
-      const trend = await fetch(
-        'https://api.themoviedb.org/3/movie/movie_id?language=en-US',
+    async function fetchDetails() {
+      const details = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
         options
       )
         .then(response => response.json())
-        .then(response => setTrendingMovies(response.results))
-        .catch(error => console.log(error));
+        .then(response => setMovieDetails(response))
+        .catch(error => {
+          console.log(error);
+        });
     }
-    fetchTrend();
+    fetchDetails();
   }, []);
-  console.log(trendingMovies);
+
+  const goBack = () => {
+    navigate(prevPath || '/movies');
+  };
 
   return (
     <div>
-      <h2>Trending today</h2>
-      <ul>
-        {trendingMovies.map(movie => (
-          <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>{movie.title || movie.name}</Link>
+      <button className="MovieDetails_goBack" onClick={goBack}>
+        Go Back
+      </button>
+      <img
+        src={`https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`}
+      ></img>
+      <h2>{movieDetails.title}</h2>
+      <p>User score: {Math.round(movieDetails.vote_average * 10)}%</p>
+      <h3>Overview</h3>
+      <p>{movieDetails.overview}</p>
+
+      <div>
+        <ul>
+          <li>
+            <Link to="cast">Cast</Link>
           </li>
-        ))}
-      </ul>
+          <li>
+            <Link to="reviews">Reviews</Link>
+          </li>
+        </ul>
+        <Outlet />
+      </div>
     </div>
   );
 };
