@@ -1,0 +1,17 @@
+.search_input {
+  margin: 20px;
+  border-radius: 10px;
+  background-color: aquamarine;
+}
+
+.search_input:focus {
+  outline-color: orange;
+}
+
+.search_button {
+  padding: 5px;
+  border-radius: 6px;
+  font-weight: 600;
+  background-color: rgb(46, 139, 22);
+  color: white;
+}

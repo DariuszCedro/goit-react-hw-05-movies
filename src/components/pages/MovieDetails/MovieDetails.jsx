@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Link,
-  Outlet,
-  useParams,
-  useNavigate,
-  useLocation,
-} from 'react-router-dom';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+import css from './MovieDetails.module.css';
 
-export const MovieDetails = ({ apiKey }) => {
+const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState([]);
-  const { movieId, prevPath } = useParams();
-  const navigate = useNavigate();
+  const { movieId } = useParams();
   const location = useLocation();
-
+  const apiKey = process.env.REACT_APP_API_KEY;
   const options = {
     method: 'GET',
     headers: {
@@ -34,34 +28,40 @@ export const MovieDetails = ({ apiKey }) => {
         });
     }
     fetchDetails();
-  }, [location]);
-  console.log(location);
+  }, []);
 
   return (
-    <div>
-      <Link to={location.state?.from ?? '/movies'}>
-        <button className="MovieDetails_goBack">Go Back</button>
-      </Link>
-      <img
-        src={`https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`}
-        alt=""
-      ></img>
-      <h2>{movieDetails.title}</h2>
-      <p>User score: {Math.round(movieDetails.vote_average * 10)}%</p>
-      <h3>Overview</h3>
-      <p>{movieDetails.overview}</p>
-
-      <div>
-        <ul>
-          <li>
-            <Link to="cast">Cast</Link>
-          </li>
-          <li>
-            <Link to="reviews">Reviews</Link>
-          </li>
-        </ul>
-        <Outlet />
+    <>
+      <div className={css.details_container}>
+        <Link to={location.state?.from ?? '/movies'}>
+          <button className={css.button_back}>GO BACK</button>
+        </Link>
+        <div className={css.movie_description}>
+          <img
+            className={css.poster}
+            src={`https://image.tmdb.org/t/p/w200${movieDetails.poster_path}`}
+            alt=""
+          ></img>
+          <div>
+            <h2>{movieDetails.title}</h2>
+            <p>User score: {Math.round(movieDetails.vote_average * 10)}%</p>
+            <h3>Overview</h3>
+            <p>{movieDetails.overview}</p>
+          </div>
+        </div>
+        <div className={css.details_additional}>
+          <ul>
+            <li>
+              <Link to="cast">Cast</Link>
+            </li>
+            <li>
+              <Link to="reviews">Reviews</Link>
+            </li>
+          </ul>
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
+export default MovieDetails;

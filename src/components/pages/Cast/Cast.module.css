@@ -1,0 +1,16 @@
+.cast {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: antiquewhite;
+}
+h2 {
+  margin: 20px;
+}
+p {
+  word-break: break-all;
+}
+li {
+  max-width: 200px;
+}

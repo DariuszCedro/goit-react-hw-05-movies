@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import css from './Cast.module.css';
 
-export const Cast = ({ apiKey }) => {
+const Cast = () => {
   const [movieCast, setMovieCast] = useState([]);
   const { movieId } = useParams();
-
+  const apiKey = process.env.REACT_APP_API_KEY;
   const options = {
     method: 'GET',
     headers: {
@@ -29,16 +30,20 @@ export const Cast = ({ apiKey }) => {
   return (
     <div>
       <h2>Cast</h2>
-      {movieCast.map(actor => (
-        <li key={actor.id}>
-          <img
-            src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-            alt=""
-          ></img>
-          <h4>{actor.name}</h4>
-          <p>{actor.character}</p>
-        </li>
-      ))}
+      <div className={css.cast}>
+        {movieCast.map(actor => (
+          <li key={actor.id}>
+            <img
+              className={css.portrait}
+              src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
+              alt="NO PORTRAIT"
+            ></img>
+            <h4>{actor.name}</h4>
+            <p>{actor.character}</p>
+          </li>
+        ))}
+      </div>
     </div>
   );
 };
+export default Cast;

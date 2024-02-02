@@ -1,6 +1,6 @@
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-export const MovieList = ({ movies, title }) => {
+const MovieList = ({ movies, title }) => {
   const location = useLocation();
   return (
     <div>
@@ -16,3 +16,4 @@ export const MovieList = ({ movies, title }) => {
     </div>
   );
 };
+export default MovieList;

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export const Trending = ({ apiKey }) => {
+const Trending = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
-
+  const apiKey = process.env.REACT_APP_API_KEY;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYjZjNWEzMDUzOWIyNWQ2NGMyZjMwZWU3NTcxNDBhYSIsInN1YiI6IjY1MTU1OWE3ZWE4NGM3MDBjYTA2MzBmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FwLcqT6vmI1pVtpiCh05oXJVCAZQxvIbvFTx0sGIUxw`,
+      Authorization: `Bearer ${apiKey}`,
     },
   };
 
@@ -38,3 +38,4 @@ export const Trending = ({ apiKey }) => {
     </div>
   );
 };
+export default Trending;

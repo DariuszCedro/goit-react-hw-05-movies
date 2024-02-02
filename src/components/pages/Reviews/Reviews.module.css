@@ -1,0 +1,7 @@
+.reviews {
+  background-color: antiquewhite;
+  padding: 40px;
+}
+li {
+  max-width: 600px;
+}

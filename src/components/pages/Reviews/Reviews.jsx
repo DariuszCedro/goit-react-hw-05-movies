@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import css from './Reviews.module.css';
 
-export const Reviews = ({ apiKey }) => {
+const Reviews = () => {
   const [movieReviews, setMovieReviews] = useState([]);
   const { movieId } = useParams();
-
+  const apiKey = process.env.REACT_APP_API_KEY;
   const options = {
     method: 'GET',
     headers: {
@@ -24,10 +25,10 @@ export const Reviews = ({ apiKey }) => {
         .catch(error => console.log(error));
     }
     fetchReviews();
-  });
-  console.log(movieReviews);
+  }, []);
+
   return (
-    <div>
+    <div className={css.reviews}>
       <h2>Reviews</h2>
       {movieReviews.map(review => (
         <li key={review.id}>
@@ -38,3 +39,4 @@ export const Reviews = ({ apiKey }) => {
     </div>
   );
 };
+export default Reviews;

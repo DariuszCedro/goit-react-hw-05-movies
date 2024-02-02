@@ -1,11 +1,14 @@
 import React from 'react';
+import { css } from './Home.module.css';
 
-import { Trending } from '../Trending/Trending';
+import Trending from '../Trending/Trending';
 
-export const Home = () => {
+const Home = () => {
   return (
     <main>
       <Trending />
     </main>
   );
 };
+
+export default Home;

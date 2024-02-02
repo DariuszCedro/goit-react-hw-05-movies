@@ -1,3 +1,28 @@
 li {
   list-style-type: none;
 }
+
+a {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+a:visited {
+  color: black;
+}
+
+a:hover {
+  color: red;
+}
+
+.app_ul {
+  margin: 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.app_header {
+  padding: 20px;
+  background-color: rgb(27, 214, 43);
+}

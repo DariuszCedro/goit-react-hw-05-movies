@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
-import { MovieList } from '../MovieList/MovieList';
+import { useSearchParams } from 'react-router-dom';
+import MovieList from '../MovieList/MovieList';
 import { useEffect } from 'react';
+import css from './Movies.module.css';
 
-export const Movies = ({ apiKey }) => {
+const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const title = searchParams.get('title') ?? '';
-  const location = useLocation();
-
+  const apiKey = process.env.REACT_APP_API_KEY;
   const options = {
     method: 'GET',
     headers: {
@@ -49,9 +49,9 @@ export const Movies = ({ apiKey }) => {
         placeholder="Search movie title..."
         value={title}
         onChange={e => updateQueryString(e.target.value)}
-        className="search-input"
+        className={css.search_input}
       />
-      <button type="submit" onClick={handleClick} className="search-button">
+      <button type="submit" onClick={handleClick} className={css.search_button}>
         Search
       </button>
 
@@ -59,3 +59,4 @@ export const Movies = ({ apiKey }) => {
     </div>
   );
 };
+export default Movies;
